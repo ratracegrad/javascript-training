@@ -27,6 +27,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="lessons/my-lesson1.html">
 <link rel="lazy-import" href="lessons/my-lesson2.html">
 <link rel="lazy-import" href="lessons/my-lesson3.html">
+<link rel="lazy-import" href="lessons/my-lesson4.html">
+<link rel="lazy-import" href="lessons/my-lesson5.html">
+<link rel="lazy-import" href="lessons/my-lesson6.html">
 <link rel="lazy-import" href="my-view404.html">
 
 <dom-module id="my-app">
@@ -184,8 +187,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             effects="waterfall">
                     <app-toolbar>
                         <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-                        <div main-title>Beginning JavaScript Functional
-                            Programming</div>
+                        <div main-title>Beginning JavaScript: Introduction to
+                            Functional Programming
+                        </div>
                     </app-toolbar>
                 </app-header>
 
@@ -197,6 +201,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <my-lesson1 name="lesson1"></my-lesson1>
                         <my-lesson2 name="lesson2"></my-lesson2>
                         <my-lesson3 name="lesson3"></my-lesson3>
+                        <my-lesson4 name="lesson4"></my-lesson4>
+                        <my-lesson5 name="lesson5"></my-lesson5>
+                        <my-lesson6 name="lesson6"></my-lesson6>
                         <my-view404 name="view404"></my-view404>
                     </iron-pages>
                 </app-box>
@@ -246,8 +253,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 step: 2,
                             },
                             {
-                                title: 'Step 3',
+                                title: 'Array#map',
                                 step: 3,
+                            },
+                            {
+                                title: 'Array#filter',
+                                step: 4,
+                            },
+                            {
+                                title: 'Array#reduce',
+                                step: 5,
+                            },
+                            {
+                                title: 'Higher Order Functions in Practice',
+                                step: 6,
                             },
                         ],
                     },

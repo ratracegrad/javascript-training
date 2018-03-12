@@ -29,7 +29,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 When working on JavaScript projects you inevitably come
                 across situations where you have to do some data
                 manipulation.  As people learn the JavaScript language, they
-                learn how to do data manipulation using for-loops. Here is an example:
+                learn how to do data manipulation using <code>for-loops</code>.
+                Here is an example:
     <pre class="prettyprint"><code>
 function doubleValues(data) {
     for var i = 0; i < data.length; i++) {
@@ -39,10 +40,10 @@ function doubleValues(data) {
     </code></pre>
             </p>
             <p>
-                In functional programming language, there are no loops. When
-                you need to do an operation like traversing a list or a tree,
-                there are two predominant styles: recursion and higher-order
-                functions.
+                You an always use a <code>for-loop</code> to get the desired
+                result, but <code>for-loops</code> can quickly become a bit
+                messy and large. Most of the time it can be much easier to
+                use a higher-order function.
             </p>
             <p>
                 A higher-order function is a better solution to manipulating
@@ -51,10 +52,28 @@ function doubleValues(data) {
                 functions in JavaScript that map to classic higher-order
                 functions.
             </p>
-
             <p>
-                In ES6 JavaScript the higher-order functions I will be
-                covering are defined on the Array prototype.
+                When using higher-order functions, your code stays cleaner
+                and is easier to read.
+            </p>
+            <p>
+                The rule of thumb I use to determine which higher-order
+                function I should use is as follows:
+                <ul>
+                    <li>If I already have an array and I want to do the exact
+                        same operation on each of the elements in the array and
+                        return the same amount of items in the array, use
+                        <code>map</code>.
+                    </li>
+                    <li>If I already have an array but I only want to have items
+                        in the array that match certain criteria, use
+                        <code>filter</code>.
+                    </li>
+                    <li>If I already have an array, but I want to use the
+                        values in that array to create something completely new,
+                        use <code>reduce</code>.
+                    </li>
+                </ul>
             </p>
         </div>
     </template>
@@ -68,13 +87,12 @@ function doubleValues(data) {
 
                 var blocks = this.shadowRoot.querySelectorAll('pre > code');
                 blocks.forEach(function(block) {
-                    // TODO: consider pre-escaping markup on server.
                     Polymer.dom(block).innerHTML = prettyPrintOne(
-                        this.encodeHTMLEntities_(block.textContent));
+                        this._encodeHTMLEntities(block.textContent));
                 }.bind(this));
 
             }
-            encodeHTMLEntities_(htmlStr) {
+            _encodeHTMLEntities(htmlStr) {
                 return htmlStr
                     .replace(/&/g, '&amp;')
                     .replace(/</g, '&lt;')
