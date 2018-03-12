@@ -1,0 +1,297 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="lazy-import" href="lessons/my-lesson1.html">
+<link rel="lazy-import" href="lessons/my-lesson2.html">
+<link rel="lazy-import" href="lessons/my-lesson3.html">
+<link rel="lazy-import" href="my-view404.html">
+
+<dom-module id="my-app">
+    <template>
+        <style include="shared-styles">
+            :host {
+            --app-primary-color: #4285f4;
+            --app-secondary-color: black;
+            --app-drawer-width: 300px;
+
+            display: block;
+            }
+
+            app-drawer-layout:not([narrow]) [drawer-toggle] {
+                display: none;
+            }
+
+            app-header {
+                color: #fff;
+                background-color: var(--app-primary-color);
+                height: 64px;
+                padding: 10px 16px;
+            }
+
+            app-header paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            #drawer {
+                --app-drawer-content-container: {
+                    box-shadow: 1px 0 2px 1px rgba(0,0,0,0.18);
+                    background-color: #f4f3f4;
+                }
+            }
+
+            .drawer-list {
+                margin: 0 20px;
+            }
+
+            .drawer-list a {
+                display: block;
+                padding: 0 16px;
+                text-decoration: none;
+                color: var(--app-secondary-color);
+                line-height: 40px;
+            }
+
+            .drawer-list a.iron-selected {
+                color: black;
+                font-weight: bold;
+            }
+
+            .toc-item {
+                font-size: 16px;
+                color: #212121;
+                overflow: hidden;
+                border-radius: 4px;
+                padding: 6px 16px;
+                box-sizing: content-box;
+                display: flex;
+                flex-direction: row;
+                line-height: 24px;
+                font-weight: 400;
+                align-items: center;
+                min-height: 48px;
+                position: relative;
+                cursor: pointer;
+            }
+            .toc-item.completed {
+                border-color: #2196f3;
+            }
+            .toc-entry,
+            .toc-entry0 {
+                display: inline-block;
+                font-style: normal;
+                width: 28px;
+                min-width: 28px;
+                height: 28px;
+                line-height: 28px;
+                background: #fff;
+                border-radius: 50%;
+                text-align: center;
+                vertical-align: middle;
+                border: 3px solid #bdbdbd;
+                margin-right: 8px;
+                font-weight: 400;
+            }
+            .toc-entry::after,
+            .toc-entry0::after {
+                content: '';
+                display: block;
+                border-left: 1px solid #bdbdbd;
+                width: 0;
+                height: 44px;
+                z-index: 1;
+                margin-left: 13px;
+                border-color: #2196f3;
+            }
+            .toc-entry::before {
+                content: '';
+                display: block;
+                border-left: 1px solid #bdbdbd;
+                width: 0;
+                height: 44px;
+                z-index: 1;
+                margin-top: -44px;
+                margin-left: 13px;
+                border-color: #2196f3;
+            }
+
+        </style>
+
+        <app-location
+            route="{{route}}"
+            url-space-regex="^[[rootPath]]">
+        </app-location>
+
+        <app-route
+            route="{{route}}"
+            pattern="[[rootPath]]:page"
+            data="{{routeData}}"
+            tail="{{subroute}}">
+        </app-route>
+
+        <app-drawer-layout fullbleed narrow="{{narrow}}">
+            <!-- Drawer content -->
+            <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+                <div style="height: 100%; overflow: auto;">
+                    <iron-selector selected="[[page]]"
+                                   attr-for-selected="name"
+                                   class="drawer-list"
+                                   role="navigation">
+                        <paper-listbox>
+                            <template is="dom-repeat" items="{{steps}}">
+                                <a name="[[_getName(index)]]"
+                                   href="[[_getHref(index)]]">
+                                    <paper-item
+                                            class="toc-item">
+                                        <i class$="[[_getTocClass(index)]]">
+                                            {{item.step}}</i>
+                                        <span class=>{{item.title}}</span>
+                                    </paper-item>
+                                </a>
+                            </template>
+                        </paper-listbox>
+                    </iron-selector>
+                </div>
+
+            </app-drawer>
+
+            <!-- Main content -->
+            <app-header-layout fullbleed has-scrolling-region>
+
+                <app-header slot="header" fixed reveals
+                            effects="waterfall">
+                    <app-toolbar>
+                        <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+                        <div main-title>Beginning JavaScript Functional
+                            Programming</div>
+                    </app-toolbar>
+                </app-header>
+
+                <app-box style="height: 100px;" effects="parallax-background">
+                    <iron-pages selected="[[page]]"
+                                attr-for-selected="name"
+                                fallback-selection="view404"
+                                role="main">
+                        <my-lesson1 name="lesson1"></my-lesson1>
+                        <my-lesson2 name="lesson2"></my-lesson2>
+                        <my-lesson3 name="lesson3"></my-lesson3>
+                        <my-view404 name="view404"></my-view404>
+                    </iron-pages>
+                </app-box>
+
+            </app-header-layout>
+
+        </app-drawer-layout>
+
+        <footer id="controls">
+            <div class="fabs layout horizontal justified">
+                <paper-fab raised
+                           icon="icons:chevron-left"></paper-fab>
+                <paper-fab raised
+                           icon="icons:chevron-right"></paper-fab>
+            </div>
+
+        </footer>
+    </template>
+
+    <script>
+        // Gesture events like tap and track generated from touch will not be
+        // preventable, allowing for better scrolling performance.
+        Polymer.setPassiveTouchGestures(true);
+
+        class MyApp extends Polymer.Element {
+            static get is() { return 'my-app'; }
+
+            static get properties() {
+                return {
+                    page: {
+                        type: String,
+                        reflectToAttribute: true,
+                        observer: '_pageChanged',
+                    },
+                    routeData: Object,
+                    subroute: Object,
+                    rootPath: String,
+                    steps: {
+                        type: Array,
+                        value: [
+                            {
+                                title: 'Introduction',
+                                step: 1,
+                            },
+                            {
+                                title: 'Higher-Order Functions',
+                                step: 2,
+                            },
+                            {
+                                title: 'Step 3',
+                                step: 3,
+                            },
+                        ],
+                    },
+                };
+            }
+
+            static get observers() {
+                return [
+                    '_routePageChanged(routeData.page)',
+                ];
+            }
+
+            _routePageChanged(page) {
+                this.page = page || 'lesson1';
+
+                // Close a non-persistent drawer when the page & route are changed.
+                if (!this.$.drawer.persistent) {
+                  this.$.drawer.close();
+                }
+            }
+            _pageChanged(page) {
+                // Load page import on demand. Show 404 page if fails
+                const resolvedPageUrl = this.resolveUrl('lessons/my-' + page +
+                    '.html');
+                Polymer.importHref(
+                    resolvedPageUrl,
+                    null,
+                    this._showPage404.bind(this),
+                    true);
+            }
+            _showPage404() {
+                this.page = 'view404';
+            }
+            _getName(idx) {
+                return `lesson${idx + 1}`;
+            }
+            _getHref(idx) {
+                return `${this.rootPath}lesson${idx+1}`;
+            }
+            _getTocClass(idx) {
+                return (idx === 0) ? `toc-entry0` : `toc-entry`;
+            }
+        }
+
+        window.customElements.define(MyApp.is, MyApp);
+    </script>
+</dom-module>

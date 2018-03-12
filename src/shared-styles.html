@@ -1,0 +1,159 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<!-- shared styles for all views -->
+<dom-module id="shared-styles">
+    <template>
+        <style>
+            .card {
+                margin: 24px auto;
+                max-width: 800px;
+                padding: 16px;
+                color: #757575;
+                border-radius: 5px;
+                background-color: #fff;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            }
+
+            .circle {
+                display: inline-block;
+                width: 64px;
+                height: 64px;
+                text-align: center;
+                color: #555;
+                border-radius: 50%;
+                background: #ddd;
+                font-size: 30px;
+                line-height: 64px;
+            }
+
+            h1 {
+                margin: 16px 0;
+                color: #212121;
+                font-size: 22px;
+            }
+
+            footer {
+                position: absolute;
+                right: 0;
+                bottom: 32px;
+                padding: 0 32px;
+                width: calc(100% - 300px);
+                box-sizing: border-box;
+                pointer-events: none;
+                line-height: 24px;
+            }
+            .fabs {
+                max-width: calc(800px + 175px);
+                margin: 0 auto;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            paper-fab {
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                -ms-flex-direction: column;
+                -webkit-flex-direction: column;
+                flex-direction: column;
+                -ms-flex-align: center;
+                -webkit-align-items: center;
+                align-items: center;
+                -ms-flex-pack: center;
+                -webkit-justify-content: center;
+                justify-content: center;
+                background: #1976d2;
+                border-radius: 50%;
+                box-sizing: border-box;
+                color: #ffffff;
+                cursor: pointer;
+                height: 56px;
+                min-width: 0;
+                outline: none;
+                padding: 16px;
+                position: relative;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -webkit-user-select: none;
+                user-select: none;
+                width: 56px;
+                z-index: 0;
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+                -webkit-tap-highlight-color: transparent;
+            }
+
+
+            /* Pretty printing styles. Used with prettify.js. */
+            /* Vim sunburst theme by David Leibovic */
+            pre {
+                font-family: 'Source Code Pro', monospace;
+            }
+            code {
+                font-family: 'Source Code Pro', monospace;
+                color: #333;
+                background-color: rgba(0, 0, 0, 0.08);
+                padding: 0.1em 0.3em;
+            }
+
+            pre .str, code .str { color: #65B042; } /* string  - green */
+            pre .kwd, code .kwd { color: #E28964; } /* keyword - dark pink */
+            pre .com, code .com { color: #AEAEAE; font-style: italic; } /* comment - gray */
+            pre .typ, code .typ { color: #89bdff; } /* type - light blue */
+            pre .lit, code .lit { color: #3387CC; } /* literal - blue */
+            pre .pun, code .pun { color: #fff; } /* punctuation - white */
+            pre .pln, code .pln { color: #fff; } /* plaintext - white */
+            pre .tag, code .tag { color: #89bdff; } /* html/xml tag    - light blue */
+            pre .atn, code .atn { color: #bdb76b; } /* html/xml attribute name  - khaki */
+            pre .atv, code .atv { color: #65B042; } /* html/xml attribute value - green */
+            pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
+
+            pre.prettyprint, code.prettyprint {
+                background-color: #000;
+                -moz-border-radius: 8px;
+                -webkit-border-radius: 8px;
+                -o-border-radius: 8px;
+                -ms-border-radius: 8px;
+                -khtml-border-radius: 8px;
+                border-radius: 8px;
+            }
+
+            pre.prettyprint {
+                width: 95%;
+                margin: 1em auto;
+                padding: 1em;
+                white-space: pre-wrap;
+            }
+
+
+            /* Specify class=linenums on a pre to get line numbering */
+            ol.linenums { margin-top: 0; margin-bottom: 0; color: #AEAEAE; } /* IE indents via margin-left */
+            li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8 { list-style-type: none }
+            /* Alternate shading for lines */
+            li.L1,li.L3,li.L5,li.L7,li.L9 { }
+
+            @media print {
+                pre .str, code .str { color: #060; }
+                pre .kwd, code .kwd { color: #006; font-weight: bold; }
+                pre .com, code .com { color: #600; font-style: italic; }
+                pre .typ, code .typ { color: #404; font-weight: bold; }
+                pre .lit, code .lit { color: #044; }
+                pre .pun, code .pun { color: #440; }
+                pre .pln, code .pln { color: #000; }
+                pre .tag, code .tag { color: #006; font-weight: bold; }
+                pre .atn, code .atn { color: #404; }
+                pre .atv, code .atv { color: #060; }
+            }
+
+        </style>
+    </template>
+</dom-module>

@@ -1,0 +1,87 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+
+<dom-module id="my-lesson2">
+    <template strip-whitespace>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                padding: 10px;
+            }
+
+        </style>
+
+        <div class="card">
+            <div class="circle">2</div>
+            <h1>Higher-Order Functions</h1>
+            <p>
+                When working on JavaScript projects you inevitably come
+                across situations where you have to do some data
+                manipulation.  As people learn the JavaScript language, they
+                learn how to do data manipulation using for-loops. Here is an example:
+    <pre class="prettyprint"><code>
+function doubleValues(data) {
+    for var i = 0; i < data.length; i++) {
+        data[i] = data[i] * 2;
+    }
+}
+    </code></pre>
+            </p>
+            <p>
+                In functional programming language, there are no loops. When
+                you need to do an operation like traversing a list or a tree,
+                there are two predominant styles: recursion and higher-order
+                functions.
+            </p>
+            <p>
+                A higher-order function is a better solution to manipulating
+                data than a for-loop. <code>map</code>, <code>filter</code>
+                and <code>reduce</code> / <code>reduceRight</code> are the
+                functions in JavaScript that map to classic higher-order
+                functions.
+            </p>
+
+            <p>
+                In ES6 JavaScript the higher-order functions I will be
+                covering are defined on the Array prototype.
+            </p>
+        </div>
+    </template>
+
+    <script>
+        class MyLesson2 extends Polymer.Element {
+            static get is() { return 'my-lesson2'; }
+
+            ready() {
+                super.ready();
+
+                var blocks = this.shadowRoot.querySelectorAll('pre > code');
+                blocks.forEach(function(block) {
+                    // TODO: consider pre-escaping markup on server.
+                    Polymer.dom(block).innerHTML = prettyPrintOne(
+                        this.encodeHTMLEntities_(block.textContent));
+                }.bind(this));
+
+            }
+            encodeHTMLEntities_(htmlStr) {
+                return htmlStr
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
+        }
+
+        window.customElements.define(MyLesson2.is, MyLesson2);
+    </script>
+</dom-module>
