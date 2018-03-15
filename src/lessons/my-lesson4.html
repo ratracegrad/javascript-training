@@ -12,29 +12,219 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="my-lesson4">
-  <template>
-    <style include="shared-styles">
-      :host {
-        display: block;
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
 
-        padding: 10px;
-      }
-    </style>
+                padding: 10px;
+            }
+        </style>
 
-    <div class="card">
-      <div class="circle">5</div>
-      <h1>Array#filter</h1>
-      <p>
+        <div class="card">
+            <div class="circle">4</div>
+            <h1>Array#filter</h1>
+            <p>
+                The <code>filter()</code> method returns a new array created
+                from all elements that pass a certain test on an original
+                array. Here's what the synatx looks like:
+            </p>
+            <code>let newArr = oldArr.filter(callback)</code>
+            <ul>
+                <li><code>newArr</code></li> - the new array that is returned
+                <li><code>oldArr</code></li> - the array to run the filter
+                function on
+                <li><code>callback</code></li> - the function used to test
+                each element of the <code>oldArr</code>. Returning <code>true</code>
+                keeps the element, returning <code>false</code> to not keep it.
+            </ul>
+            <p>
+                Our <code>callback</code> function can take three arguments:
+            </p>
+            <ul>
+                <li><code>element</code></li> - the current element of the array
+                <li><code>index</code></li> - the current index of the value
+                being processed
+                <li><code>arr</code></li> - the original array
+            </ul>
+            <h3>Filter vs For Loop Example</h3>
+            <p>
+                You can think of <code>filter()</code> as a for loop,
+                that is specifically for filtering in/out certain values from an
+                array. Consider the following code:
+            </p>
+<pre class="prettyprint"><code>let arr = [1, 2, 3, 4, 5, 6];
+let even = [];
 
-      </p>
-    </div>
-  </template>
+for(var i = 0; i < arr.length; i++) {
+    if (arr[i] % 2 === 0) even.push(arr[i]);
+}
 
-  <script>
-    class MyLesson4 extends Polymer.Element {
-      static get is() { return 'my-lesson4'; }
+// even = [2,4,6]
+</code>
+</pre>
+            <p>
+                This code tests all of the values in the <code>arr</code> array.
+                Only the even values are accepted and pushed onto the
+                <code>even</code> array. What results is an array of all the even
+                numbers: <code>even = [2,4,6]</code>.
+            </p>
+            <p>
+                Again, this code works, but there is an easier way to achieve
+                the same result — using the <code>filter()</code> method.
+            </p>
+            <p>
+                To use the <code>filter()</code> function, we’ll start with
+                the same simple array of numbers:
+            </p>
+            <code>let arr = [1, 2, 3, 4, 5, 6];</code>
+            <p>
+                <code>arr</code> is the array we’re going to map over. Since we
+                want to keep only the even numbers, we have to return true if a
+                number is even, and false if a number is odd. Here’s one way to
+                do this:
+            </p>
+<pre class="prettyprint">
+<code>
+let even = arr.filter(val => {
+    return val % 2 === 0;
+});
+
+// even = [2,4,6]
+</code>
+</pre>
+            <p>
+                Awesome! There is no loop needed, and we no longer have to add
+                values manually to an array. When working with the
+                <code>filter()</code> function, all you need to do is
+                define what you want to keep and then <code>return
+                true</code> for those values. <code>Filter()</code> will
+                handle the rest.
+            </p>
+            <p>
+                Above we test to see if the value ( <code>val</code> ) is even.
+                If it is even, we return <code>true</code> which adds it to the
+                <code>even</code> array. If it is odd, we return <code>false
+                </code> which skips over the value. What we’re left with is all
+                of our even values in our <code>even</code> array!
+            </p>
+            <h3>Filter Example #2</h3>
+            <p>
+                Lets consider a more complex example that utilizes an array of
+                objects. Here’s the data we’ll work with:
+            </p>
+<pre class="prettyprint">
+<code>
+let data = [
+    {
+        country: 'China',
+        population: 1409517397,
+    },
+    {
+        country: 'India',
+        population: 1339180127,
+    },
+    {
+        country: 'USA',
+        population: 324459463,
+    },
+    {
+        country: 'Indonesia',
+        population: 263991379,
     }
+];
+</code>
+</pre>
+            <p>
+                What we want to do is create a new array with only the countries
+                that have a population higher than 500 million.
+            </p>
+            <p>
+                To do this, all we have to do is test our data and return
+                <code>true</code> if <code>data.population</code> is greater
+                than 500,000,000.
+            </p>
+<pre class="prettyprint">
+<code>
+let cities = data.filter(val => {
+    return val.population > 500000000;
+});
+</code>
+</pre>
+            <p>
+                Just these two lines of codes ensure that only the largest
+                cities make our list. Even though our data is more complex, the
+                process to filter it remains relatively unchanged. After running
+                our filter function, we’re left with this:
+            </p>
+<pre class="prettyprint">
+<code>
+cities = [
+    {country: "China", population: 1409517397},
+    {country: "India", population: 1339180127}
+]
+</code>
+</pre>
+            <h3>Filter & ES6</h3>
+            <p>
+                The introduction of arrow functions in ES6 has simplified the
+                use of <code>filter()</code> even more. Consider the above
+                example where we only return cities with a population greater
+                than 500 million. Here is the current code:
+            </p>
+<pre class="prettyprint">
+<code>
+let cities = data.filter(val => {
+    return val.population > 500000000;
+});
+</code>
+</pre>
+            <p>
+                We’re already using an arrow function, but our
+                <code>filter()</code> method can still be cleaned up even
+                more. That’s because when returning a value from an arrow
+                function, you can remove the brackets in the function to
+                indicate that is the value you want to return. The below code is
+                exactly equal to the above code:
+            </p>
+            <pre class="prettyprint">
+<code>
+let cities = data.filter(val => val.population > 500000000);
+</code>
+</pre>
+            <p>
+                Just like above, this code will test each value in our array to
+                determine if the population is greater than 500 million. If it is, a
+                <code>true</code> value is returned which will add the element to the
+                cities array!
+            </p>
+        </div>
 
-    window.customElements.define(MyLesson4.is, MyLesson4);
-  </script>
+    </template>
+
+    <script>
+        class MyLesson4 extends Polymer.Element {
+            static get is() {
+                return 'my-lesson4';
+            }
+            ready() {
+                super.ready();
+
+                let blocks = this.shadowRoot.querySelectorAll('pre > code');
+                blocks.forEach(function(block) {
+                    Polymer.dom(block).innerHTML = prettyPrintOne(
+                        this._encodeHTMLEntities(block.textContent));
+                }.bind(this));
+
+            }
+            _encodeHTMLEntities(htmlStr) {
+                return htmlStr
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
+        }
+
+        window.customElements.define(MyLesson4.is, MyLesson4);
+    </script>
 </dom-module>

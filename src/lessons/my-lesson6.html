@@ -12,29 +12,98 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="my-lesson6">
-  <template>
-    <style include="shared-styles">
-      :host {
-        display: block;
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
 
-        padding: 10px;
-      }
-    </style>
+                padding: 10px;
+            }
+        </style>
 
-    <div class="card">
-      <div class="circle">6</div>
-      <h1>Higher Order Functions in Practice</h1>
-      <p>
+        <div class="card">
+            <div class="circle">6</div>
+            <h1>Challenge Problem</h1>
+            <p>Here is your chance to apply what you have learned in the
+                previous lessons. I will walk you through several examples
+                where you can combine <code>map</code>, <code>filter</code>
+                and <code>reduce</code> functions to solve a problem. Let's
+                get started.
+            </p>
+            <p>
+                Consider the following data:
+            </p>
+<pre class="prettyprint">
+<code>
+data = [
+    {
+        name: 'Butters',
+        age: 3,
+        type: 'dog'
+    },
+    {
+        name: 'Lizzy',
+        age: 6,
+        type: 'dog'
+    },
+    {
+        name: 'Red',
+        age: 1,
+        type: 'cat'
+    },
+    {
+        name: 'Joey',
+        age: 3,
+        type: 'dog'
+    },
+];
+</code>
+</pre>
+            <p>
+                As you can see we have an array of objects. Each object
+                represents a pet. The pets have a <code>name</code>, an
+                <code>age</code>, and a <code>type</code>.
+            </p>
+            <h3>Challenge</h3>
+            <p>
+                Write the code for the <code>getAges function</code> that
+                will sum up all of the doges ages in dog years.
+            </p>
+            <p>Here is some hints:</p>
+            <ul>
+                <li>Select only the dogs</li>
+                <li>Translate their ages into dog years (multiply by seven)</li>
+                <li>Sum the results</li>
+                <li>Return the result</li>
+            </ul>
+            <p>Write your own function to solve this Challenge.
+            </p>
+        </div>
+    </template>
 
-      </p>
-    </div>
-  </template>
+    <script>
+        class MyLesson6 extends Polymer.Element {
+            static get is() {
+                return 'my-lesson6';
+            }
 
-  <script>
-    class MyLesson6 extends Polymer.Element {
-      static get is() { return 'my-lesson6'; }
-    }
+            ready() {
+                super.ready();
 
-    window.customElements.define(MyLesson6.is, MyLesson6);
-  </script>
+                let blocks = this.shadowRoot.querySelectorAll('pre > code');
+                blocks.forEach(function (block) {
+                    Polymer.dom(block).innerHTML = prettyPrintOne(
+                        this._encodeHTMLEntities(block.textContent));
+                }.bind(this));
+            }
+            _encodeHTMLEntities(htmlStr) {
+                return htmlStr
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
+        }
+
+        window.customElements.define(MyLesson6.is, MyLesson6);
+    </script>
 </dom-module>

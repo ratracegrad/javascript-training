@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../shared-styles.html">
 
-<dom-module id="my-lesson6">
+<dom-module id="my-lesson7">
     <template>
         <style include="shared-styles">
             :host {
@@ -22,76 +22,125 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
 
         <div class="card">
-            <div class="circle">6</div>
-            <h1>Challenge #1</h1>
-            <p>Here is your chance to apply what you have learned in the
-                previous lessons. I will walk you through several examples
-                where you can combine <code>map</code>, <code>filter</code>
-                and <code>reduce</code> functions to solve a problem. Let's
-                get started.
-            </p>
+            <div class="circle">7</div>
+            <h1>Challenge Problem Solution</h1>
             <p>
-                Consider the following data:
+                Here’s how we could accomplish this with a <code>for loop</code>:
             </p>
 <pre class="prettyprint">
 <code>
-data = [
-    {
-        name: 'Butters',
-        age: 3,
-        type: 'dog'
-    },
-    {
-        name: 'Lizzy',
-        age: 6,
-        type: 'dog'
-    },
-    {
-        name: 'Red',
-        age: 1,
-        type: 'cat'
-    },
-    {
-        name: 'Joey',
-        age: 3,
-        type: 'dog'
-    },
-];
+function getAges(data) {
+    let sum = 0;
+        for (var i = 0; i < data.length; i++){
+        if (data[i].type === 'dog'){
+            let tempAge = data[i].age;
+            sum += (tempAge * 7);
+        }
+    }
+    return sum;
+}
+// getAges(data) = 84
 </code>
 </pre>
             <p>
-                As you can see we have an array of objects. Each object
-                represents a pet. The pets have a <code>name</code>, an
-                <code>age</code>, and a <code>type</code>.
+                We create a variable named <code>sum</code> and set it equal to
+                <code>0</code>. Then we loop through our array, one object at a
+                time. If our pet is a <code>dog</code>, we take the age of
+                that dog, multiply it by seven, and add the resulting value to
+                our <code>sum</code>. We repeat this operation for each
+                <code>dog</code> in the array. When our loop finishes, we return
+                the <code>sum</code>.
             </p>
-            <h3>Challenge #1</h3>
             <p>
-                Write the code for the <code>getAges function</code> that
-                will sum up all of the doges ages in dog years.
+                And it works! We get <code>84</code>. And while the above code
+                isn’t wrong, it’s also not a perfect solution.
             </p>
-            <p>Here is some hints:</p>
-            <ul>
-                <li>Select only the dogs</li>
-                <li>Translate their ages into dog years (multiply by seven)</li>
-                <li>Sum the results</li>
-                <li>Return the result</li>
-            </ul>
-            <p>Write your own function to solve this Challenge.
+            <p>
+                Namely, it’s doing a lot of things at once. It’s accomplishing
+                all three of our challenges in one function which makes it
+                somewhat difficult to read. The code also isn’t very reusable.
             </p>
+            <p>
+                To solve this problem, we’re going to utilize
+                <code>map()</code>, <code>reduce()</code>, and
+                <code>filter()</code> to accomplish the same goal.
+            </p>
+            <p>
+                The first thing we need to do with our data is filter out the
+                cats. We can use <code>filter()</code> to accomplish this.
+            </p>
+            <p>
+                Our filter method takes the pet as input and will return
+                <code>true</code> on a an animal if its <code>type</code> is
+                equal to <code>dog</code>:
+            </p>
+<pre class="prettyprint">
+<code>
+let ages = data.filter((animal) => {
+    return animal.type === 'dog';
+});
+</code>
+</pre>
+            <p>
+                Now that we only have dogs, we need to find the ages of the dogs
+                and multiply them by 7. We can do this with the
+                <code>map()</code> method. Our map function will simply
+                return the animals age multiplied by 7:
+            </p>
+<pre class="prettyprint">
+<code>
+.map((animal) => {
+    return animal.age *= 7;
+})
+</code>
+</pre>
+            <p>
+                Finally, we need to sum the ages of all of our dogs. We can do
+                this with the <code>reduce()</code> method. Our reduce
+                function will return the sum of our animals age and the current
+                sum:
+            </p>
+<pre class="prettyprint">
+<code>
+.reduce((sum, animal) => {
+    return sum + animal.age;
+});
+</code>
+</pre>
+            <p>
+                Now that we have all three of our steps completed, we simply
+                chain our actions together. Here’s what the code looks like:
+            </p>
+<pre class="prettyprint">
+<code>
+let ages = data
+    .filter((animal) => {
+        return animal.type === 'dog';
+    })
+    .map((animal) => {
+        return animal.age * 7
+    })
+    .reduce((sum, animal) => {
+        return sum + animal.age;
+    });
+
+// ages = 84
+</code>
+</pre>
         </div>
     </template>
 
     <script>
-        class MyLesson6 extends Polymer.Element {
+        class MyLesson7 extends Polymer.Element {
             static get is() {
-                return 'my-lesson6';
+                return 'my-lesson7';
             }
 
             ready() {
                 super.ready();
 
                 let blocks = this.shadowRoot.querySelectorAll('pre > code');
-                blocks.forEach(function (block) {
+                blocks.forEach(function(block) {
                     Polymer.dom(block).innerHTML = prettyPrintOne(
                         this._encodeHTMLEntities(block.textContent));
                 }.bind(this));
@@ -104,6 +153,6 @@ data = [
             }
         }
 
-        window.customElements.define(MyLesson6.is, MyLesson6);
+        window.customElements.define(MyLesson7.is, MyLesson7);
     </script>
 </dom-module>

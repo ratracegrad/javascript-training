@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="lessons/my-lesson4.html">
 <link rel="lazy-import" href="lessons/my-lesson5.html">
 <link rel="lazy-import" href="lessons/my-lesson6.html">
+<link rel="lazy-import" href="lessons/my-lesson7.html">
 <link rel="lazy-import" href="my-view404.html">
 
 <dom-module id="my-app">
@@ -101,8 +102,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .toc-item.completed {
                 border-color: #2196f3;
             }
-            .toc-entry,
-            .toc-entry0 {
+            .toc-entry {
                 display: inline-block;
                 font-style: normal;
                 width: 28px;
@@ -117,8 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 margin-right: 8px;
                 font-weight: 400;
             }
-            .toc-entry::after,
-            .toc-entry0::after {
+            .toc-entry::after {
                 content: '';
                 display: block;
                 border-left: 1px solid #bdbdbd;
@@ -139,6 +138,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 margin-left: 13px;
                 border-color: #2196f3;
             }
+            .first-entry::before {
+                display: none;
+            }
+            .last-entry::after {
+                display: none;
+            }
+            .full-height {
+                height: 100%;
+                overflow: auto;
+            }
 
         </style>
 
@@ -157,7 +166,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-drawer-layout fullbleed narrow="{{narrow}}">
             <!-- Drawer content -->
             <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-                <div style="height: 100%; overflow: auto;">
+                <div class="full-height">
                     <iron-selector selected="[[page]]"
                                    attr-for-selected="name"
                                    class="drawer-list"
@@ -204,6 +213,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <my-lesson4 name="lesson4"></my-lesson4>
                         <my-lesson5 name="lesson5"></my-lesson5>
                         <my-lesson6 name="lesson6"></my-lesson6>
+                        <my-lesson7 name="lesson7"></my-lesson7>
                         <my-view404 name="view404"></my-view404>
                     </iron-pages>
                 </app-box>
@@ -265,8 +275,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 step: 5,
                             },
                             {
-                                title: 'Higher Order Functions in Practice',
+                                title: 'Challenge Problem',
                                 step: 6,
+                            },
+                            {
+                                title: 'Challenge Problem Solution',
+                                step: 7,
                             },
                         ],
                     },
@@ -307,7 +321,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 return `${this.rootPath}lesson${idx+1}`;
             }
             _getTocClass(idx) {
-                return (idx === 0) ? `toc-entry0` : `toc-entry`;
+                return (idx === 0) ? `toc-entry first-entry` : (idx === 6) ?
+                    `toc-entry last-entry` : `toc-entry`;
             }
         }
 
