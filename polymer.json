@@ -2,10 +2,14 @@
   "entrypoint": "index.html",
   "shell": "src/my-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html"
+    "src/lessons/my-view1.html",
+    "src/lessons/my-view2.html",
+    "src/lessons/my-view3.html",
+    "src/lessons/my-view4.html",
+    "src/lessons/my-view5.html",
+    "src/lessons/my-view6.html",
+    "src/lessons/my-view7.html",
+    "src/lessons/my-view404.html"
   ],
   "sources": [
     "images/**/*",
