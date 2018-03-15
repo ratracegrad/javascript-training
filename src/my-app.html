@@ -113,7 +113,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 border-radius: 50%;
                 text-align: center;
                 vertical-align: middle;
-                border: 3px solid #bdbdbd;
+                border: 3px solid #2196f3;
                 margin-right: 8px;
                 font-weight: 400;
             }
@@ -174,6 +174,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-listbox>
                             <template is="dom-repeat" items="{{steps}}">
                                 <a name="[[_getName(index)]]"
+                                   id="[[_getName(index)]]"
                                    href="[[_getHref(index)]]">
                                     <paper-item
                                             class="toc-item">
@@ -222,21 +223,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         </app-drawer-layout>
 
-        <footer id="controls">
-            <div class="fabs layout horizontal justified">
-                <paper-fab raised
-                           icon="icons:chevron-left"></paper-fab>
-                <paper-fab raised
-                           icon="icons:chevron-right"></paper-fab>
-            </div>
+        <!--<footer id="controls">-->
+            <!--<div class="fabs layout horizontal justified">-->
+                <!--<paper-fab raised-->
+                           <!--icon="icons:chevron-left"-->
+                           <!--hidden$="[[hidePrev]]"-->
+                           <!--on-tap="_goPrev"></paper-fab>-->
+                <!--<paper-fab raised-->
+                           <!--icon="icons:chevron-right"-->
+                           <!--hidden$="[[hideNext]]"-->
+                           <!--on-tap="_goNext"></paper-fab>-->
+            <!--</div>-->
 
-        </footer>
+        <!--</footer>-->
     </template>
 
     <script>
         // Gesture events like tap and track generated from touch will not be
         // preventable, allowing for better scrolling performance.
-        Polymer.setPassiveTouchGestures(true);
+        // Polymer.setPassiveTouchGestures(true);
 
         class MyApp extends Polymer.Element {
             static get is() { return 'my-app'; }
@@ -284,6 +289,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             },
                         ],
                     },
+                    currentLesson: {
+                        type: Number,
+                        value: 1,
+                        notify: true,
+                    },
+                    hidePrev: {
+                        type: Boolean,
+                        value: true,
+                        notify: true,
+                    },
+                    hideNext: {
+                        type: Boolean,
+                        value: false,
+                        notify: true,
+                    },
                 };
             }
 
@@ -294,6 +314,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
 
             _routePageChanged(page) {
+                console.log('routePageChanged changed', page);
                 this.page = page || 'lesson1';
 
                 // Close a non-persistent drawer when the page & route are changed.
@@ -302,6 +323,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
             }
             _pageChanged(page) {
+                console.log('pageChanged', page);
+
                 // Load page import on demand. Show 404 page if fails
                 const resolvedPageUrl = this.resolveUrl('lessons/my-' + page +
                     '.html');
@@ -323,6 +346,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             _getTocClass(idx) {
                 return (idx === 0) ? `toc-entry first-entry` : (idx === 6) ?
                     `toc-entry last-entry` : `toc-entry`;
+            }
+            _goNext() {
+                console.log('_goNext', this.currentLesson);
+                this.currentLesson = this.currentLesson + 1;
+                if (this.currentLesson === 7) {
+                    this.set('hideNext', true);
+                }
+                this.page === `lesson${this.currentLesson}`;
+            }
+            _goPrev() {
+                this.currentLesson = this.currentLesson - 1;
+                if (this.currentLesson === 1) {
+                    this.set('hidePrev', true);
+                }
             }
         }
 
