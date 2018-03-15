@@ -24,14 +24,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="shared-styles.html">
 
-<link rel="lazy-import" href="lessons/my-lesson1.html">
-<link rel="lazy-import" href="lessons/my-lesson2.html">
-<link rel="lazy-import" href="lessons/my-lesson3.html">
-<link rel="lazy-import" href="lessons/my-lesson4.html">
-<link rel="lazy-import" href="lessons/my-lesson5.html">
-<link rel="lazy-import" href="lessons/my-lesson6.html">
-<link rel="lazy-import" href="lessons/my-lesson7.html">
-<link rel="lazy-import" href="my-view404.html">
+<link rel="import" href="lessons/my-lesson1.html">
+<link rel="import" href="lessons/my-lesson2.html">
+<link rel="import" href="lessons/my-lesson3.html">
+<link rel="import" href="lessons/my-lesson4.html">
+<link rel="import" href="lessons/my-lesson5.html">
+<link rel="import" href="lessons/my-lesson6.html">
+<link rel="import" href="lessons/my-lesson7.html">
+<link rel="import" href="my-view404.html">
 
 <dom-module id="my-app">
     <template>
@@ -289,21 +289,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             },
                         ],
                     },
-                    currentLesson: {
-                        type: Number,
-                        value: 1,
-                        notify: true,
-                    },
-                    hidePrev: {
-                        type: Boolean,
-                        value: true,
-                        notify: true,
-                    },
-                    hideNext: {
-                        type: Boolean,
-                        value: false,
-                        notify: true,
-                    },
                 };
             }
 
@@ -314,7 +299,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
 
             _routePageChanged(page) {
-                console.log('routePageChanged changed', page);
                 this.page = page || 'lesson1';
 
                 // Close a non-persistent drawer when the page & route are changed.
@@ -323,8 +307,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
             }
             _pageChanged(page) {
-                console.log('pageChanged', page);
-
                 // Load page import on demand. Show 404 page if fails
                 const resolvedPageUrl = this.resolveUrl('lessons/my-' + page +
                     '.html');
@@ -346,20 +328,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             _getTocClass(idx) {
                 return (idx === 0) ? `toc-entry first-entry` : (idx === 6) ?
                     `toc-entry last-entry` : `toc-entry`;
-            }
-            _goNext() {
-                console.log('_goNext', this.currentLesson);
-                this.currentLesson = this.currentLesson + 1;
-                if (this.currentLesson === 7) {
-                    this.set('hideNext', true);
-                }
-                this.page === `lesson${this.currentLesson}`;
-            }
-            _goPrev() {
-                this.currentLesson = this.currentLesson - 1;
-                if (this.currentLesson === 1) {
-                    this.set('hidePrev', true);
-                }
             }
         }
 
