@@ -24,14 +24,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="shared-styles.html">
 
-<link rel="import" href="lessons/my-lesson1.html">
-<link rel="import" href="lessons/my-lesson2.html">
-<link rel="import" href="lessons/my-lesson3.html">
-<link rel="import" href="lessons/my-lesson4.html">
-<link rel="import" href="lessons/my-lesson5.html">
-<link rel="import" href="lessons/my-lesson6.html">
-<link rel="import" href="lessons/my-lesson7.html">
-<link rel="import" href="my-view404.html">
+<link rel="lazy-import" href="lessons/my-lesson0.html">
+<link rel="lazy-import" href="lessons/my-lesson1.html">
+<link rel="lazy-import" href="lessons/my-lesson2.html">
+<link rel="lazy-import" href="lessons/my-lesson3.html">
+<link rel="lazy-import" href="lessons/my-lesson4.html">
+<link rel="lazy-import" href="lessons/my-lesson5.html">
+<link rel="lazy-import" href="lessons/my-lesson6.html">
+<link rel="lazy-import" href="my-view404.html">
 
 <dom-module id="my-app">
     <template>
@@ -99,9 +99,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 position: relative;
                 cursor: pointer;
             }
-            .toc-item.completed {
-                border-color: #2196f3;
-            }
             .toc-entry {
                 display: inline-block;
                 font-style: normal;
@@ -113,7 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 border-radius: 50%;
                 text-align: center;
                 vertical-align: middle;
-                border: 3px solid #2196f3;
+                border: 3px solid #c0c0c0;
                 margin-right: 8px;
                 font-weight: 400;
             }
@@ -148,6 +145,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 height: 100%;
                 overflow: auto;
             }
+            .active {
+                background-color: #e0e0e0;
+                color: #212121;
+                font-weight: 600;
+            }
+            paper-item.completed i {
+                border-color: #2196f3;
+            }
 
         </style>
 
@@ -173,16 +178,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                    role="navigation">
                         <paper-listbox>
                             <template is="dom-repeat" items="{{steps}}">
-                                <a name="[[_getName(index)]]"
-                                   id="[[_getName(index)]]"
-                                   href="[[_getHref(index)]]">
-                                    <paper-item
-                                            class="toc-item">
+                                    <paper-item class="toc-item"
+                                                id="[[_getid(index)]]"
+                                                on-tap="_changeSelection">
                                         <i class$="[[_getTocClass(index)]]">
                                             {{item.step}}</i>
                                         <span class=>{{item.title}}</span>
                                     </paper-item>
-                                </a>
                             </template>
                         </paper-listbox>
                     </iron-selector>
@@ -208,13 +210,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 attr-for-selected="name"
                                 fallback-selection="view404"
                                 role="main">
+                        <my-lesson0 name="lesson0"></my-lesson0>
                         <my-lesson1 name="lesson1"></my-lesson1>
                         <my-lesson2 name="lesson2"></my-lesson2>
                         <my-lesson3 name="lesson3"></my-lesson3>
                         <my-lesson4 name="lesson4"></my-lesson4>
                         <my-lesson5 name="lesson5"></my-lesson5>
                         <my-lesson6 name="lesson6"></my-lesson6>
-                        <my-lesson7 name="lesson7"></my-lesson7>
                         <my-view404 name="view404"></my-view404>
                     </iron-pages>
                 </app-box>
@@ -223,25 +225,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         </app-drawer-layout>
 
-        <!--<footer id="controls">-->
-            <!--<div class="fabs layout horizontal justified">-->
-                <!--<paper-fab raised-->
-                           <!--icon="icons:chevron-left"-->
-                           <!--hidden$="[[hidePrev]]"-->
-                           <!--on-tap="_goPrev"></paper-fab>-->
-                <!--<paper-fab raised-->
-                           <!--icon="icons:chevron-right"-->
-                           <!--hidden$="[[hideNext]]"-->
-                           <!--on-tap="_goNext"></paper-fab>-->
-            <!--</div>-->
+        <footer id="controls">
+            <div class="fabs">
 
-        <!--</footer>-->
+                <paper-fab raised
+                           icon="icons:chevron-left"
+                           style="float: left;"
+                           hidden$="[[hidePrev]]"
+                           on-tap="_goPrev"></paper-fab>
+                <paper-fab raised
+                           style="float: right;"
+                           icon="icons:chevron-right"
+                           hidden$="[[hideNext]]"
+                           on-click="_goNext"></paper-fab>
+            </div>
+
+        </footer>
     </template>
 
     <script>
         // Gesture events like tap and track generated from touch will not be
         // preventable, allowing for better scrolling performance.
-        // Polymer.setPassiveTouchGestures(true);
+        Polymer.setPassiveTouchGestures(true);
 
         class MyApp extends Polymer.Element {
             static get is() { return 'my-app'; }
@@ -256,6 +261,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     routeData: Object,
                     subroute: Object,
                     rootPath: String,
+                    currentPage: {
+                        type: String,
+                        value: 'lesson0',
+                        notify: true,
+                    },
+                    hidePrev: {
+                        type: Boolean,
+                        value: false,
+                        notify: true,
+                    },
+                    hideNext: {
+                        type: Boolean,
+                        value: false,
+                        notify: true,
+                    },
+                    courseTitle: {
+                        type: String,
+                        value: 'intro-javascript',
+                    },
                     steps: {
                         type: Array,
                         value: [
@@ -299,7 +323,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
 
             _routePageChanged(page) {
-                this.page = page || 'lesson1';
+                this.page = page || 'lesson0';
 
                 // Close a non-persistent drawer when the page & route are changed.
                 if (!this.$.drawer.persistent) {
@@ -308,26 +332,77 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
             _pageChanged(page) {
                 // Load page import on demand. Show 404 page if fails
-                const resolvedPageUrl = this.resolveUrl('lessons/my-' + page +
-                    '.html');
-                Polymer.importHref(
-                    resolvedPageUrl,
-                    null,
-                    this._showPage404.bind(this),
-                    true);
+                Polymer.Async.microTask.run(() => {
+                    const resolvedPageUrl = this.resolveUrl('lessons/my-' + page +
+                        '.html');
+                    Polymer.importHref(
+                        resolvedPageUrl,
+                        null,
+                        this._showPage404.bind(this),
+                        true);
+
+                    // remove active from any currently selected lesson
+                    let active = this.shadowRoot.querySelector('.active');
+                    if (active) {
+                        active.classList.toggle('active');
+                    }
+
+                    // add active to currently selected lesson
+                    let current = this.shadowRoot.querySelector('#' + page);
+                    if (current) {
+                        current.classList.add('active');
+                    }
+
+                    // update paper-fav items
+                    if (page === 'lesson0') {
+                        this.set('hidePrev', true);
+                        this.set('hideNext', false);
+                    } else if (page === 'lesson6') {
+                        this.set('hideNext', true);
+                        this.set('hidePrev', false);
+                    } else {
+                        this.set('hidePrev', false);
+                        this.set('hideNext', false);
+                    }
+
+                    // set currentPage
+                    this.currentPage = page;
+                });
             }
             _showPage404() {
                 this.page = 'view404';
             }
-            _getName(idx) {
-                return `lesson${idx + 1}`;
-            }
-            _getHref(idx) {
-                return `${this.rootPath}lesson${idx+1}`;
+            _getid(idx) {
+                return `lesson${idx}`;
             }
             _getTocClass(idx) {
-                return (idx === 0) ? `toc-entry first-entry` : (idx === 6) ?
-                    `toc-entry last-entry` : `toc-entry`;
+                return (idx === 0) ? `toc-entry first-entry` :
+                    (idx === 6) ? `toc-entry last-entry` : `toc-entry`;
+            }
+            _changeSelection(e) {
+                this._updateNav(e.model.index);
+            }
+            _updateNav(idx) {
+                let toc = this.shadowRoot.querySelectorAll('paper-item');
+                toc.forEach(function(item) {
+                    let id = +item.id.substring(6);
+                    if (id <= idx) {
+                        item.classList.add('completed');
+                    } else {
+                        item.classList.remove('completed');
+                    }
+                });
+                this.page = 'lesson' + idx;
+            }
+            _goPrev(e) {
+                let cp = +this.currentPage.substring(6) - 1;
+                this.page = 'lesson' + cp;
+                this._updateNav(cp);
+            }
+            _goNext(e) {
+                let cp = +this.currentPage.substring(6) + 1;
+                this.page = 'lesson' + cp;
+                this._updateNav(cp);
             }
         }
 
