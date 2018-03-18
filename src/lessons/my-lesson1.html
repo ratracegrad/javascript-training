@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../shared-styles.html">
 <script src="../../bower_components/google-code-prettify/src/prettify.js"></script>
 
-<dom-module id="my-lesson2">
+<dom-module id="my-lesson1">
     <template strip-whitespace>
         <style include="shared-styles">
             :host {
@@ -79,8 +79,8 @@ function doubleValues(data) {
     </template>
 
     <script>
-        class MyLesson2 extends Polymer.Element {
-            static get is() { return 'my-lesson2'; }
+        class MyLesson1 extends Polymer.Element {
+            static get is() { return 'my-lesson1'; }
 
             ready() {
                 super.ready();
@@ -100,6 +100,6 @@ function doubleValues(data) {
             }
         }
 
-        window.customElements.define(MyLesson2.is, MyLesson2);
+        window.customElements.define(MyLesson1.is, MyLesson1);
     </script>
 </dom-module>

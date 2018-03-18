@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../shared-styles.html">
 
-<dom-module id="my-lesson4">
+<dom-module id="my-lesson3">
     <template>
         <style include="shared-styles">
             :host {
@@ -203,9 +203,9 @@ let cities = data.filter(val => val.population > 500000000);
     </template>
 
     <script>
-        class MyLesson4 extends Polymer.Element {
+        class MyLesson3 extends Polymer.Element {
             static get is() {
-                return 'my-lesson4';
+                return 'my-lesson3';
             }
             ready() {
                 super.ready();
@@ -225,6 +225,6 @@ let cities = data.filter(val => val.population > 500000000);
             }
         }
 
-        window.customElements.define(MyLesson4.is, MyLesson4);
+        window.customElements.define(MyLesson3.is, MyLesson3);
     </script>
 </dom-module>
