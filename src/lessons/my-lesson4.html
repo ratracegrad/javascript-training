@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../shared-styles.html">
 
-<dom-module id="my-lesson4">
+<dom-module id="my-lesson5">
     <template>
         <style include="shared-styles">
             :host {
@@ -22,190 +22,192 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
 
         <div class="card">
-            <div class="circle">4</div>
-            <h1>Array#filter</h1>
+            <div class="circle">5</div>
+            <h1>Array#reduce</h1>
             <p>
-                The <code>filter()</code> method returns a new array created
-                from all elements that pass a certain test on an original
-                array. Here's what the synatx looks like:
-            </p>
-            <code>let newArr = oldArr.filter(callback)</code>
-            <ul>
-                <li><code>newArr</code></li> - the new array that is returned
-                <li><code>oldArr</code></li> - the array to run the filter
-                function on
-                <li><code>callback</code></li> - the function used to test
-                each element of the <code>oldArr</code>. Returning <code>true</code>
-                keeps the element, returning <code>false</code> to not keep it.
-            </ul>
-            <p>
-                Our <code>callback</code> function can take three arguments:
-            </p>
-            <ul>
-                <li><code>element</code></li> - the current element of the array
-                <li><code>index</code></li> - the current index of the value
-                being processed
-                <li><code>arr</code></li> - the original array
-            </ul>
-            <h3>Filter vs For Loop Example</h3>
-            <p>
-                You can think of <code>filter()</code> as a for loop,
-                that is specifically for filtering in/out certain values from an
-                array. Consider the following code:
-            </p>
-<pre class="prettyprint"><code>let arr = [1, 2, 3, 4, 5, 6];
-let even = [];
-
-for(var i = 0; i < arr.length; i++) {
-    if (arr[i] % 2 === 0) even.push(arr[i]);
-}
-
-// even = [2,4,6]
-</code>
-</pre>
-            <p>
-                This code tests all of the values in the <code>arr</code> array.
-                Only the even values are accepted and pushed onto the
-                <code>even</code> array. What results is an array of all the even
-                numbers: <code>even = [2,4,6]</code>.
+                The <code>reduce()</code> method is used to apply a function
+                to each element in the array to reduce the array to a single value.
             </p>
             <p>
-                Again, this code works, but there is an easier way to achieve
-                the same result — using the <code>filter()</code> method.
-            </p>
-            <p>
-                To use the <code>filter()</code> function, we’ll start with
-                the same simple array of numbers:
-            </p>
-            <code>let arr = [1, 2, 3, 4, 5, 6];</code>
-            <p>
-                <code>arr</code> is the array we’re going to map over. Since we
-                want to keep only the even numbers, we have to return true if a
-                number is even, and false if a number is odd. Here’s one way to
-                do this:
+                Here’s what the syntax looks like:
             </p>
 <pre class="prettyprint">
 <code>
-let even = arr.filter(val => {
-    return val % 2 === 0;
-});
+let result = arr.reduce(callback);
 
-// even = [2,4,6]
+// Optionally, you can specify an initial value
+let result = arr.reduce(callback, initValue);
+</code>
+</pre>
+            <ul>
+                <li><code>result</code> - the single value that is returned.</li>
+                <li><code>arr</code> - the array to run the reduce function
+                    on.</li>
+                <li><code>callback</code> - the function to execute on each
+                    element in the array.</li>
+                <li><code>initValue</code> - an optionally supplied initial
+                    value. If this value is not supplied, the <code>0th</code>
+                    element is used as the initial value.</li>
+            </ul>
+            <p>
+                Our <code>callback</code> function can take four arguments. You
+                will recognize three of the arguments from the
+                <code>map()</code> and <code>filter()</code> methods. The new
+                argument is the <code>accumulator</code>.
+            </p>
+            <ul>
+                <li><code>accumulator</code> - the accumulator accumulates all
+                of the callbacks returned values.</li>
+                <li><code>val</code> - the current value being processed</li>
+                <li><code>index</code> -  the current index of the value being
+                    processed</li>
+                <li><code>arr</code> - the original array</li>
+            </ul>
+            <h3>Reduce vs. For Loop</h3>
+            <p>
+                You can think of <code>reduce()</code> as a for loop, that is
+                specifically for using the values of an array to create
+                something new. Consider the following code:
+            </p>
+<pre class="prettyprint">
+<code>
+var arr = [1, 2, 3, 4];
+var sum = 0;
+for(var i = 0; i < arr.length; i++) {
+    sum += arr[i];
+}
+// sum = 10
 </code>
 </pre>
             <p>
-                Awesome! There is no loop needed, and we no longer have to add
-                values manually to an array. When working with the
-                <code>filter()</code> function, all you need to do is
-                define what you want to keep and then <code>return
-                true</code> for those values. <code>Filter()</code> will
-                handle the rest.
+                The goal of the above code is to find the sum of all of the
+                values in our array. It loops through our array and adds each
+                value to a variable one at a time. When it’s done, our
+                <code>sum</code> is equal to <code>10</code>. While this code
+                works, there is a much easier way to achieve the same result — 
+                using the <code>reduce()</code> function.
             </p>
             <p>
-                Above we test to see if the value ( <code>val</code> ) is even.
-                If it is even, we return <code>true</code> which adds it to the
-                <code>even</code> array. If it is odd, we return <code>false
-                </code> which skips over the value. What we’re left with is all
-                of our even values in our <code>even</code> array!
+                To use the <code>reduce()</code> function, we’ll start with
+                the same simple array of numbers:
             </p>
-            <h3>Filter Example #2</h3>
+<code>let arr = [1, 2, 3, 4];</code>
             <p>
-                Lets consider a more complex example that utilizes an array of
-                objects. Here’s the data we’ll work with:
+                <code>arr</code> is the array we’re going to reduce. We want to
+                find the sum of all the values in our array. To do this, each
+                iteration we will add the current value to our accumulator and
+                return it. This returned value will then be our new accumulator.
             </p>
+<pre class="prettyprint">
+<code>
+let sum = arr.reduce((acc, val) => {
+    return acc + val;
+});
+</code>
+</pre>
+            <p>
+                We’ve used the variable <code>acc</code> to represent our
+                accumulator. As our <code>reduce</code> function works
+                through the <code>arr</code> array, the <code>acc</code> value
+                will increase until the function has completed.
+            </p>
+            <p>
+                Once complete, we can log out our <code>sum</code> variable and
+                see that the function worked:
+            </p>
+            <code>sum = 10;</code>
+            <h3>Specifying an Initial Value</h3>
+            <p>
+                Remember above when I specified that we can use an optional
+                initial value? It’s pretty easy to set that up. We’ll use the
+                same example as above. We’re going to sum our array, but this
+                time, we want to start with an initial value of
+                <code>100</code>.
+            </p>
+<pre class="prettyprint">
+<code>
+let sum = arr.reduce((acc, val) => {
+    return acc + val;
+}, 100);
+</code>
+</pre>
+            <p>
+                As you can see, the code above is almost identical to the
+                previous example. All that’s changed is we’ve added a second
+                argument after our callback. I’ve passed in the number 100 as
+                our starting point. Now, when we run the function,
+                <code>sum</code> will equal <code>110</code>.
+            </p>
+            <h3>Reduce & ES6</h3>
+            <p>
+                Working with arrow functions allows us to simplify our code even
+                more. When you return from an arrow function you can omit the
+                brackets and the return keyword to specify that you are
+                returning a value.
+            </p>
+            <p>The code above is the exact same as this code:</p>
+            <code>let sum = arr.reduce((acc, val) => acc + val, 100);</code>
+            <p>
+                With just one line of code we can take the number
+                <code>100</code> and add it to the sum of an entire array!
+                We’ve come a long way since our <code>for loop</code>!
+            </p>
+            <h3>Challenge</h3>
+            <p>Consider the following data:</p>
 <pre class="prettyprint">
 <code>
 let data = [
     {
         country: 'China',
-        population: 1409517397,
+        pop: 1409517397,
     },
     {
         country: 'India',
-        population: 1339180127,
+        pop: 1339180127,
     },
     {
         country: 'USA',
-        population: 324459463,
+        pop: 324459463,
     },
     {
         country: 'Indonesia',
-        population: 263991379,
+        pop: 263991379,
     }
 ];
 </code>
 </pre>
             <p>
-                What we want to do is create a new array with only the countries
-                that have a population higher than 500 million.
+                Using the <code>reduce()</code> method, how would you sum up
+                the population of every country except China?
             </p>
             <p>
-                To do this, all we have to do is test our data and return
-                <code>true</code> if <code>data.population</code> is greater
-                than 500,000,000.
+                Here's how I did it:
             </p>
 <pre class="prettyprint">
 <code>
-let cities = data.filter(val => {
-    return val.population > 500000000;
-});
+let sum = data.reduce((acc, val) => {
+    return val.country == 'China' ? acc : acc + val.pop;
+}, 0);
 </code>
 </pre>
             <p>
-                Just these two lines of codes ensure that only the largest
-                cities make our list. Even though our data is more complex, the
-                process to filter it remains relatively unchanged. After running
-                our filter function, we’re left with this:
+                I’m using an initial value of 0 to start off. From there, I
+                check to see if the the country name of the current element
+                matches <code>'China'</code>, if it does, I simply return the
+                <code>accumulator</code> unchanged — this essentially skips
+                China. If the country is anything other than China, I return the
+                <code>accumulator</code> plus the population of the current country.
             </p>
-<pre class="prettyprint">
-<code>
-cities = [
-    {country: "China", population: 1409517397},
-    {country: "India", population: 1339180127}
-]
-</code>
-</pre>
-            <h3>Filter & ES6</h3>
             <p>
-                The introduction of arrow functions in ES6 has simplified the
-                use of <code>filter()</code> even more. Consider the above
-                example where we only return cities with a population greater
-                than 500 million. Here is the current code:
-            </p>
-<pre class="prettyprint">
-<code>
-let cities = data.filter(val => {
-    return val.population > 500000000;
-});
-</code>
-</pre>
-            <p>
-                We’re already using an arrow function, but our
-                <code>filter()</code> method can still be cleaned up even
-                more. That’s because when returning a value from an arrow
-                function, you can remove the brackets in the function to
-                indicate that is the value you want to return. The below code is
-                exactly equal to the above code:
-            </p>
-            <pre class="prettyprint">
-<code>
-let cities = data.filter(val => val.population > 500000000);
-</code>
-</pre>
-            <p>
-                Just like above, this code will test each value in our array to
-                determine if the population is greater than 500 million. If it is, a
-                <code>true</code> value is returned which will add the element to the
-                cities array!
+                After running the function we get <code>sum = 1927630969</code>.
             </p>
         </div>
-
     </template>
 
     <script>
-        class MyLesson4 extends Polymer.Element {
+        class MyLesson5 extends Polymer.Element {
             static get is() {
-                return 'my-lesson4';
+                return 'my-lesson5';
             }
             ready() {
                 super.ready();
@@ -225,6 +227,6 @@ let cities = data.filter(val => val.population > 500000000);
             }
         }
 
-        window.customElements.define(MyLesson4.is, MyLesson4);
+        window.customElements.define(MyLesson5.is, MyLesson5);
     </script>
 </dom-module>

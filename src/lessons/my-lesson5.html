@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../shared-styles.html">
 
-<dom-module id="my-lesson5">
+<dom-module id="my-lesson6">
     <template>
         <style include="shared-styles">
             :host {
@@ -22,202 +22,79 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
 
         <div class="card">
-            <div class="circle">5</div>
-            <h1>Array#reduce</h1>
-            <p>
-                The <code>reduce()</code> method is used to apply a function
-                to each element in the array to reduce the array to a single value.
+            <div class="circle">6</div>
+            <h1>Challenge Problem</h1>
+            <p>Here is your chance to apply what you have learned in the
+                previous lessons. I will walk you through several examples
+                where you can combine <code>map</code>, <code>filter</code>
+                and <code>reduce</code> functions to solve a problem. Let's
+                get started.
             </p>
             <p>
-                Here’s what the syntax looks like:
-            </p>
-<pre class="prettyprint">
-<code>
-let result = arr.reduce(callback);
-
-// Optionally, you can specify an initial value
-let result = arr.reduce(callback, initValue);
-</code>
-</pre>
-            <ul>
-                <li><code>result</code> - the single value that is returned.</li>
-                <li><code>arr</code> - the array to run the reduce function
-                    on.</li>
-                <li><code>callback</code> - the function to execute on each
-                    element in the array.</li>
-                <li><code>initValue</code> - an optionally supplied initial
-                    value. If this value is not supplied, the <code>0th</code>
-                    element is used as the initial value.</li>
-            </ul>
-            <p>
-                Our <code>callback</code> function can take four arguments. You
-                will recognize three of the arguments from the
-                <code>map()</code> and <code>filter()</code> methods. The new
-                argument is the <code>accumulator</code>.
-            </p>
-            <ul>
-                <li><code>accumulator</code> - the accumulator accumulates all
-                of the callbacks returned values.</li>
-                <li><code>val</code> - the current value being processed</li>
-                <li><code>index</code> -  the current index of the value being
-                    processed</li>
-                <li><code>arr</code> - the original array</li>
-            </ul>
-            <h3>Reduce vs. For Loop</h3>
-            <p>
-                You can think of <code>reduce()</code> as a for loop, that is
-                specifically for using the values of an array to create
-                something new. Consider the following code:
+                Consider the following data:
             </p>
 <pre class="prettyprint">
 <code>
-var arr = [1, 2, 3, 4];
-var sum = 0;
-for(var i = 0; i < arr.length; i++) {
-    sum += arr[i];
-}
-// sum = 10
-</code>
-</pre>
-            <p>
-                The goal of the above code is to find the sum of all of the
-                values in our array. It loops through our array and adds each
-                value to a variable one at a time. When it’s done, our
-                <code>sum</code> is equal to <code>10</code>. While this code
-                works, there is a much easier way to achieve the same result — 
-                using the <code>reduce()</code> function.
-            </p>
-            <p>
-                To use the <code>reduce()</code> function, we’ll start with
-                the same simple array of numbers:
-            </p>
-<code>let arr = [1, 2, 3, 4];</code>
-            <p>
-                <code>arr</code> is the array we’re going to reduce. We want to
-                find the sum of all the values in our array. To do this, each
-                iteration we will add the current value to our accumulator and
-                return it. This returned value will then be our new accumulator.
-            </p>
-<pre class="prettyprint">
-<code>
-let sum = arr.reduce((acc, val) => {
-    return acc + val;
-});
-</code>
-</pre>
-            <p>
-                We’ve used the variable <code>acc</code> to represent our
-                accumulator. As our <code>reduce</code> function works
-                through the <code>arr</code> array, the <code>acc</code> value
-                will increase until the function has completed.
-            </p>
-            <p>
-                Once complete, we can log out our <code>sum</code> variable and
-                see that the function worked:
-            </p>
-            <code>sum = 10;</code>
-            <h3>Specifying an Initial Value</h3>
-            <p>
-                Remember above when I specified that we can use an optional
-                initial value? It’s pretty easy to set that up. We’ll use the
-                same example as above. We’re going to sum our array, but this
-                time, we want to start with an initial value of
-                <code>100</code>.
-            </p>
-<pre class="prettyprint">
-<code>
-let sum = arr.reduce((acc, val) => {
-    return acc + val;
-}, 100);
-</code>
-</pre>
-            <p>
-                As you can see, the code above is almost identical to the
-                previous example. All that’s changed is we’ve added a second
-                argument after our callback. I’ve passed in the number 100 as
-                our starting point. Now, when we run the function,
-                <code>sum</code> will equal <code>110</code>.
-            </p>
-            <h3>Reduce & ES6</h3>
-            <p>
-                Working with arrow functions allows us to simplify our code even
-                more. When you return from an arrow function you can omit the
-                brackets and the return keyword to specify that you are
-                returning a value.
-            </p>
-            <p>The code above is the exact same as this code:</p>
-            <code>let sum = arr.reduce((acc, val) => acc + val, 100);</code>
-            <p>
-                With just one line of code we can take the number
-                <code>100</code> and add it to the sum of an entire array!
-                We’ve come a long way since our <code>for loop</code>!
-            </p>
-            <h3>Challenge</h3>
-            <p>Consider the following data:</p>
-<pre class="prettyprint">
-<code>
-let data = [
+data = [
     {
-        country: 'China',
-        pop: 1409517397,
+        name: 'Butters',
+        age: 3,
+        type: 'dog'
     },
     {
-        country: 'India',
-        pop: 1339180127,
+        name: 'Lizzy',
+        age: 6,
+        type: 'dog'
     },
     {
-        country: 'USA',
-        pop: 324459463,
+        name: 'Red',
+        age: 1,
+        type: 'cat'
     },
     {
-        country: 'Indonesia',
-        pop: 263991379,
-    }
+        name: 'Joey',
+        age: 3,
+        type: 'dog'
+    },
 ];
 </code>
 </pre>
             <p>
-                Using the <code>reduce()</code> method, how would you sum up
-                the population of every country except China?
+                As you can see we have an array of objects. Each object
+                represents a pet. The pets have a <code>name</code>, an
+                <code>age</code>, and a <code>type</code>.
             </p>
+            <h3>Challenge</h3>
             <p>
-                Here's how I did it:
+                Write the code for the <code>getAges function</code> that
+                will sum up all of the doges ages in dog years.
             </p>
-<pre class="prettyprint">
-<code>
-let sum = data.reduce((acc, val) => {
-    return val.country == 'China' ? acc : acc + val.pop;
-}, 0);
-</code>
-</pre>
-            <p>
-                I’m using an initial value of 0 to start off. From there, I
-                check to see if the the country name of the current element
-                matches <code>'China'</code>, if it does, I simply return the
-                <code>accumulator</code> unchanged — this essentially skips
-                China. If the country is anything other than China, I return the
-                <code>accumulator</code> plus the population of the current country.
-            </p>
-            <p>
-                After running the function we get <code>sum = 1927630969</code>.
+            <p>Here is some hints:</p>
+            <ul>
+                <li>Select only the dogs</li>
+                <li>Translate their ages into dog years (multiply by seven)</li>
+                <li>Sum the results</li>
+                <li>Return the result</li>
+            </ul>
+            <p>Write your own function to solve this Challenge.
             </p>
         </div>
     </template>
 
     <script>
-        class MyLesson5 extends Polymer.Element {
+        class MyLesson6 extends Polymer.Element {
             static get is() {
-                return 'my-lesson5';
+                return 'my-lesson6';
             }
+
             ready() {
                 super.ready();
 
                 let blocks = this.shadowRoot.querySelectorAll('pre > code');
-                blocks.forEach(function(block) {
+                blocks.forEach(function (block) {
                     Polymer.dom(block).innerHTML = prettyPrintOne(
                         this._encodeHTMLEntities(block.textContent));
                 }.bind(this));
-
             }
             _encodeHTMLEntities(htmlStr) {
                 return htmlStr
@@ -227,6 +104,6 @@ let sum = data.reduce((acc, val) => {
             }
         }
 
-        window.customElements.define(MyLesson5.is, MyLesson5);
+        window.customElements.define(MyLesson6.is, MyLesson6);
     </script>
 </dom-module>

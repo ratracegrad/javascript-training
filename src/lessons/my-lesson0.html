@@ -1,0 +1,61 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+
+<dom-module id="my-lesson1">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                padding: 10px;
+            }
+
+        </style>
+
+        <div class="card">
+            <div class="circle">1</div>
+            <h1>Introduction</h1>
+            <p>
+                This course is an introduction to the basic skills anybody
+                learning JavaScript must know. It was created by
+                Jennifer Bland for Women Who Code Atlanta.
+            </p>
+            <p>
+                This course will cover the basics of higher-order functions
+                in JavaScript. A higher-order function is a <i>function that
+                accepts another function as an argument, or returns a
+                function as its result.</i> Both of these requirements rely
+                on functions being first-class objects in a language.
+            </p>
+            <p>
+                This course was created because I am teaching an <b>Advanced
+            JavaScript Course</b> for Women Who Code. Several people asked if
+                they are new to JavaScript programming, would they be able to
+                attend my class. If you can understand the topics in this
+                course then you have enough programming skills to attend my
+                <b>Advanced JavaScript Course</b>.  You can find <a
+                    href="https://www.meetup.com/Women-Who-Code-Atlanta/events/247626913/" target="_blank">more
+                information on my course here.</a>
+            </p>
+        </div>
+  </template>
+
+    <script>
+        class MyLesson1 extends Polymer.Element {
+            static get is() { return 'my-lesson1'; }
+        }
+
+
+    window.customElements.define(MyLesson1.is, MyLesson1);
+    </script>
+</dom-module>

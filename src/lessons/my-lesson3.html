@@ -11,183 +11,202 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../shared-styles.html">
 
-<dom-module id="my-lesson3">
+<dom-module id="my-lesson4">
     <template>
         <style include="shared-styles">
             :host {
-            display: block;
+                display: block;
 
-            padding: 10px;
+                padding: 10px;
             }
         </style>
 
         <div class="card">
-            <div class="circle">3</div>
-            <h1>Array#map</h1>
+            <div class="circle">4</div>
+            <h1>Array#filter</h1>
             <p>
-                <code>map</code> is the first higher-order function that beginners
-                will learn in JavaScript. Once you learn to use <code>map</code>,
-                your life as a programmer changes.
+                The <code>filter()</code> method returns a new array created
+                from all elements that pass a certain test on an original
+                array. Here's what the synatx looks like:
             </p>
+            <code>let newArr = oldArr.filter(callback)</code>
+            <ul>
+                <li><code>newArr</code></li> - the new array that is returned
+                <li><code>oldArr</code></li> - the array to run the filter
+                function on
+                <li><code>callback</code></li> - the function used to test
+                each element of the <code>oldArr</code>. Returning <code>true</code>
+                keeps the element, returning <code>false</code> to not keep it.
+            </ul>
             <p>
-                The <code>map()</code> method is used to apply a function on every
-                element in an array. A new array is then returned. Here's what the
-                syntax looks like:
-<pre class="prettyprint">
-<code>
-let newArr = oldArr.map((val, index, arr) => {
-  // return element to new Array
-});
-</code>
-</pre>
+                Our <code>callback</code> function can take three arguments:
             </p>
+            <ul>
+                <li><code>element</code></li> - the current element of the array
+                <li><code>index</code></li> - the current index of the value
+                being processed
+                <li><code>arr</code></li> - the original array
+            </ul>
+            <h3>Filter vs For Loop Example</h3>
             <p>
-                <ul>
-                    <li><code>newArr</code> - the new array that is
-                        returned</li>
-                    <li><code>oldArr</code> - the array to run the map
-                        function on</li>
-                    <li><code>val</code> - the current value being
-                        processed</li>
-                    <li><code>index</code> - the current index of the value
-                    being processed</li>
-                    <li><code>arr</code> - the original array</li>
-                </ul>
+                You can think of <code>filter()</code> as a for loop,
+                that is specifically for filtering in/out certain values from an
+                array. Consider the following code:
             </p>
-            <h3>Map vs For Loop Example</h3>
-            <p>
-                You can think of <code>map()</code> as a <i>for</i> loop,
-                that is specifically for transforming values. Consider the
-                following code:
-            </p>
-<pre class="prettyprint">
-<code>
-var arr = [1, 2, 3, 4];
-var plus5 = [];
+<pre class="prettyprint"><code>let arr = [1, 2, 3, 4, 5, 6];
+let even = [];
 
-for (var i = 0; i < arr.length; i++) {
-    plus5[i] = arr[i] + 5;
+for(var i = 0; i < arr.length; i++) {
+    if (arr[i] % 2 === 0) even.push(arr[i]);
 }
 
-// plus5 = [6, 7, 8, 9]
+// even = [2,4,6]
 </code>
 </pre>
             <p>
-                This code results in a new array where each value is 5 more
-                than it was in the old array. While this code works, there is
-                a much easier way to achieve the same result - using the
-                <code>map()</code> function.
+                This code tests all of the values in the <code>arr</code> array.
+                Only the even values are accepted and pushed onto the
+                <code>even</code> array. What results is an array of all the even
+                numbers: <code>even = [2,4,6]</code>.
             </p>
             <p>
-                To use the <code>map()</code> function, we'll start with the
-                same simple array of numbers:
+                Again, this code works, but there is an easier way to achieve
+                the same result — using the <code>filter()</code> method.
             </p>
             <p>
-                <code>let arr = [1, 2, 3, 4]</code>
+                To use the <code>filter()</code> function, we’ll start with
+                the same simple array of numbers:
             </p>
+            <code>let arr = [1, 2, 3, 4, 5, 6];</code>
             <p>
-                <code>arr</code> is the array we're going to map over. Since
-                we want to add 5 to each value, all we need to do is return
-                the value plus 5:
+                <code>arr</code> is the array we’re going to map over. Since we
+                want to keep only the even numbers, we have to return true if a
+                number is even, and false if a number is odd. Here’s one way to
+                do this:
             </p>
 <pre class="prettyprint">
 <code>
-let plus5 = arr.map((val, i, arr) => {
-    return val + 5;
+let even = arr.filter(val => {
+    return val % 2 === 0;
 });
+
+// even = [2,4,6]
 </code>
 </pre>
             <p>
-                Now if we log out the value of our two arrays, we can see the
-                <code>arr</code> array is unchanged, and the plus5 array has
-                our new values:
+                Awesome! There is no loop needed, and we no longer have to add
+                values manually to an array. When working with the
+                <code>filter()</code> function, all you need to do is
+                define what you want to keep and then <code>return
+                true</code> for those values. <code>Filter()</code> will
+                handle the rest.
             </p>
-            <code>arr = [1, 2, 3, 4];<br>plus5 = [6, 7, 8, 9];</code>
-            <p>There is no loop needed, and we no longer have to add values
-                manually to an array. When working with the
-                <code>map()</code> function, all you need to do is define
-                what you want to happen and <code>return</code> it.
-                <code>Map()</code> will handle the rest.
-            </p>
-            <h3>Map Example #2</h3>
             <p>
-                In this example we'll utilize both the value and index
-                arguments. We'll start with the same basic array as last time:
+                Above we test to see if the value ( <code>val</code> ) is even.
+                If it is even, we return <code>true</code> which adds it to the
+                <code>even</code> array. If it is odd, we return <code>false
+                </code> which skips over the value. What we’re left with is all
+                of our even values in our <code>even</code> array!
             </p>
-            <code>let arr = [1, 2, 3, 4];</code>
+            <h3>Filter Example #2</h3>
             <p>
-                This time however we're going to return an object. This
-                object will contain the index and the value at that index. To
-                do this, we'll utilize the <code>i</code> argument:
+                Lets consider a more complex example that utilizes an array of
+                objects. Here’s the data we’ll work with:
             </p>
 <pre class="prettyprint">
 <code>
-let newArr = arr.map((val, i, arr) => {
-    return {
-        value: val,
-        index: i
-    };
-});
-</code>
-</pre>
-            <p>
-                This will create an array of objects for us within our
-                <code>newArr</code>:
-            </p>
-<pre class="prettyprint">
-<code>
-arr = [1,2,3,4];
-newArr = [
-  {value: 1, index: 0},
-  {value: 2, index: 1},
-  {value: 3, index: 2},
-  {value: 4, index: 3}
+let data = [
+    {
+        country: 'China',
+        population: 1409517397,
+    },
+    {
+        country: 'India',
+        population: 1339180127,
+    },
+    {
+        country: 'USA',
+        population: 324459463,
+    },
+    {
+        country: 'Indonesia',
+        population: 263991379,
+    }
 ];
 </code>
 </pre>
             <p>
-                Hopefully you're starting to see that whatever we return
-                within our map array is used to create our new array. You can
-                utilize the current value, current index, or the entire array
-                to help determine what you want to return.
-            </p>
-            <h3>Map Example #3</h3>
-            <p>
-                Up to this point, all of our examples have transformed <b>all
-            </b> of the values in the old array. What if we only want to
-                transform <b>some</b> of the values in our array? There are a
-                number of ways we could tackle this problem, here's one
-                possible solution.
+                What we want to do is create a new array with only the countries
+                that have a population higher than 500 million.
             </p>
             <p>
-                In this example we have a simple array:
-            </p>
-            <code>let arr = [1, 2, 3, 4];</code>
-            <p>
-                We want to double the even numbers and leave the odd numbers
-                the same. In order to accomplish this, we can add logic
-                within our <code>map()</code> function:
+                To do this, all we have to do is test our data and return
+                <code>true</code> if <code>data.population</code> is greater
+                than 500,000,000.
             </p>
 <pre class="prettyprint">
 <code>
-let newArr = arr.map((val, i, arr) => {
-    return val % 2 === 0 ? val * 2 : val;
+let cities = data.filter(val => {
+    return val.population > 500000000;
 });
-
-// newArr = [1, 4, 3, 8];
 </code>
 </pre>
             <p>
-                The result is our even values have been doubled and our odd
-                values remain untouched.
+                Just these two lines of codes ensure that only the largest
+                cities make our list. Even though our data is more complex, the
+                process to filter it remains relatively unchanged. After running
+                our filter function, we’re left with this:
+            </p>
+<pre class="prettyprint">
+<code>
+cities = [
+    {country: "China", population: 1409517397},
+    {country: "India", population: 1339180127}
+]
+</code>
+</pre>
+            <h3>Filter & ES6</h3>
+            <p>
+                The introduction of arrow functions in ES6 has simplified the
+                use of <code>filter()</code> even more. Consider the above
+                example where we only return cities with a population greater
+                than 500 million. Here is the current code:
+            </p>
+<pre class="prettyprint">
+<code>
+let cities = data.filter(val => {
+    return val.population > 500000000;
+});
+</code>
+</pre>
+            <p>
+                We’re already using an arrow function, but our
+                <code>filter()</code> method can still be cleaned up even
+                more. That’s because when returning a value from an arrow
+                function, you can remove the brackets in the function to
+                indicate that is the value you want to return. The below code is
+                exactly equal to the above code:
+            </p>
+            <pre class="prettyprint">
+<code>
+let cities = data.filter(val => val.population > 500000000);
+</code>
+</pre>
+            <p>
+                Just like above, this code will test each value in our array to
+                determine if the population is greater than 500 million. If it is, a
+                <code>true</code> value is returned which will add the element to the
+                cities array!
             </p>
         </div>
+
     </template>
 
     <script>
-        class MyLesson3 extends Polymer.Element {
-            static get is() { return 'my-lesson3'; }
-
+        class MyLesson4 extends Polymer.Element {
+            static get is() {
+                return 'my-lesson4';
+            }
             ready() {
                 super.ready();
 
@@ -206,6 +225,6 @@ let newArr = arr.map((val, i, arr) => {
             }
         }
 
-        window.customElements.define(MyLesson3.is, MyLesson3);
+        window.customElements.define(MyLesson4.is, MyLesson4);
     </script>
 </dom-module>

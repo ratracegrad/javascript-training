@@ -10,82 +10,188 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../shared-styles.html">
-<script src="../../bower_components/google-code-prettify/src/prettify.js"></script>
 
-<dom-module id="my-lesson2">
-    <template strip-whitespace>
+<dom-module id="my-lesson3">
+    <template>
         <style include="shared-styles">
             :host {
-                display: block;
-                padding: 10px;
-            }
+            display: block;
 
+            padding: 10px;
+            }
         </style>
 
         <div class="card">
-            <div class="circle">2</div>
-            <h1>Higher-Order Functions</h1>
+            <div class="circle">3</div>
+            <h1>Array#map</h1>
             <p>
-                When working on JavaScript projects you inevitably come
-                across situations where you have to do some data
-                manipulation.  As people learn the JavaScript language, they
-                learn how to do data manipulation using <code>for-loops</code>.
-                Here is an example:
-    <pre class="prettyprint"><code>
-function doubleValues(data) {
-    for var i = 0; i < data.length; i++) {
-        data[i] = data[i] * 2;
-    }
-}
-    </code></pre>
+                <code>map</code> is the first higher-order function that beginners
+                will learn in JavaScript. Once you learn to use <code>map</code>,
+                your life as a programmer changes.
             </p>
             <p>
-                You an always use a <code>for-loop</code> to get the desired
-                result, but <code>for-loops</code> can quickly become a bit
-                messy and large. Most of the time it can be much easier to
-                use a higher-order function.
+                The <code>map()</code> method is used to apply a function on every
+                element in an array. A new array is then returned. Here's what the
+                syntax looks like:
+<pre class="prettyprint">
+<code>
+let newArr = oldArr.map((val, index, arr) => {
+  // return element to new Array
+});
+</code>
+</pre>
             </p>
             <p>
-                A higher-order function is a better solution to manipulating
-                data than a for-loop. <code>map</code>, <code>filter</code>
-                and <code>reduce</code> / <code>reduceRight</code> are the
-                functions in JavaScript that map to classic higher-order
-                functions.
-            </p>
-            <p>
-                When using higher-order functions, your code stays cleaner
-                and is easier to read.
-            </p>
-            <p>
-                The rule of thumb I use to determine which higher-order
-                function I should use is as follows:
                 <ul>
-                    <li>If I already have an array and I want to do the exact
-                        same operation on each of the elements in the array and
-                        return the same amount of items in the array, use
-                        <code>map</code>.
-                    </li>
-                    <li>If I already have an array but I only want to have items
-                        in the array that match certain criteria, use
-                        <code>filter</code>.
-                    </li>
-                    <li>If I already have an array, but I want to use the
-                        values in that array to create something completely new,
-                        use <code>reduce</code>.
-                    </li>
+                    <li><code>newArr</code> - the new array that is
+                        returned</li>
+                    <li><code>oldArr</code> - the array to run the map
+                        function on</li>
+                    <li><code>val</code> - the current value being
+                        processed</li>
+                    <li><code>index</code> - the current index of the value
+                    being processed</li>
+                    <li><code>arr</code> - the original array</li>
                 </ul>
+            </p>
+            <h3>Map vs For Loop Example</h3>
+            <p>
+                You can think of <code>map()</code> as a <i>for</i> loop,
+                that is specifically for transforming values. Consider the
+                following code:
+            </p>
+<pre class="prettyprint">
+<code>
+var arr = [1, 2, 3, 4];
+var plus5 = [];
+
+for (var i = 0; i < arr.length; i++) {
+    plus5[i] = arr[i] + 5;
+}
+
+// plus5 = [6, 7, 8, 9]
+</code>
+</pre>
+            <p>
+                This code results in a new array where each value is 5 more
+                than it was in the old array. While this code works, there is
+                a much easier way to achieve the same result - using the
+                <code>map()</code> function.
+            </p>
+            <p>
+                To use the <code>map()</code> function, we'll start with the
+                same simple array of numbers:
+            </p>
+            <p>
+                <code>let arr = [1, 2, 3, 4]</code>
+            </p>
+            <p>
+                <code>arr</code> is the array we're going to map over. Since
+                we want to add 5 to each value, all we need to do is return
+                the value plus 5:
+            </p>
+<pre class="prettyprint">
+<code>
+let plus5 = arr.map((val, i, arr) => {
+    return val + 5;
+});
+</code>
+</pre>
+            <p>
+                Now if we log out the value of our two arrays, we can see the
+                <code>arr</code> array is unchanged, and the plus5 array has
+                our new values:
+            </p>
+            <code>arr = [1, 2, 3, 4];<br>plus5 = [6, 7, 8, 9];</code>
+            <p>There is no loop needed, and we no longer have to add values
+                manually to an array. When working with the
+                <code>map()</code> function, all you need to do is define
+                what you want to happen and <code>return</code> it.
+                <code>Map()</code> will handle the rest.
+            </p>
+            <h3>Map Example #2</h3>
+            <p>
+                In this example we'll utilize both the value and index
+                arguments. We'll start with the same basic array as last time:
+            </p>
+            <code>let arr = [1, 2, 3, 4];</code>
+            <p>
+                This time however we're going to return an object. This
+                object will contain the index and the value at that index. To
+                do this, we'll utilize the <code>i</code> argument:
+            </p>
+<pre class="prettyprint">
+<code>
+let newArr = arr.map((val, i, arr) => {
+    return {
+        value: val,
+        index: i
+    };
+});
+</code>
+</pre>
+            <p>
+                This will create an array of objects for us within our
+                <code>newArr</code>:
+            </p>
+<pre class="prettyprint">
+<code>
+arr = [1,2,3,4];
+newArr = [
+  {value: 1, index: 0},
+  {value: 2, index: 1},
+  {value: 3, index: 2},
+  {value: 4, index: 3}
+];
+</code>
+</pre>
+            <p>
+                Hopefully you're starting to see that whatever we return
+                within our map array is used to create our new array. You can
+                utilize the current value, current index, or the entire array
+                to help determine what you want to return.
+            </p>
+            <h3>Map Example #3</h3>
+            <p>
+                Up to this point, all of our examples have transformed <b>all
+            </b> of the values in the old array. What if we only want to
+                transform <b>some</b> of the values in our array? There are a
+                number of ways we could tackle this problem, here's one
+                possible solution.
+            </p>
+            <p>
+                In this example we have a simple array:
+            </p>
+            <code>let arr = [1, 2, 3, 4];</code>
+            <p>
+                We want to double the even numbers and leave the odd numbers
+                the same. In order to accomplish this, we can add logic
+                within our <code>map()</code> function:
+            </p>
+<pre class="prettyprint">
+<code>
+let newArr = arr.map((val, i, arr) => {
+    return val % 2 === 0 ? val * 2 : val;
+});
+
+// newArr = [1, 4, 3, 8];
+</code>
+</pre>
+            <p>
+                The result is our even values have been doubled and our odd
+                values remain untouched.
             </p>
         </div>
     </template>
 
     <script>
-        class MyLesson2 extends Polymer.Element {
-            static get is() { return 'my-lesson2'; }
+        class MyLesson3 extends Polymer.Element {
+            static get is() { return 'my-lesson3'; }
 
             ready() {
                 super.ready();
 
-                var blocks = this.shadowRoot.querySelectorAll('pre > code');
+                let blocks = this.shadowRoot.querySelectorAll('pre > code');
                 blocks.forEach(function(block) {
                     Polymer.dom(block).innerHTML = prettyPrintOne(
                         this._encodeHTMLEntities(block.textContent));
@@ -100,6 +206,6 @@ function doubleValues(data) {
             }
         }
 
-        window.customElements.define(MyLesson2.is, MyLesson2);
+        window.customElements.define(MyLesson3.is, MyLesson3);
     </script>
 </dom-module>

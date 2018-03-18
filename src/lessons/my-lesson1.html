@@ -10,10 +10,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../shared-styles.html">
+<script src="../../bower_components/google-code-prettify/src/prettify.js"></script>
 
-
-<dom-module id="my-lesson1">
-    <template>
+<dom-module id="my-lesson2">
+    <template strip-whitespace>
         <style include="shared-styles">
             :host {
                 display: block;
@@ -23,39 +23,83 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
 
         <div class="card">
-            <div class="circle">1</div>
-            <h1>Introduction</h1>
+            <div class="circle">2</div>
+            <h1>Higher-Order Functions</h1>
             <p>
-                This course is an introduction to the basic skills anybody
-                learning JavaScript must know. It was created by
-                Jennifer Bland for Women Who Code Atlanta.
+                When working on JavaScript projects you inevitably come
+                across situations where you have to do some data
+                manipulation.  As people learn the JavaScript language, they
+                learn how to do data manipulation using <code>for-loops</code>.
+                Here is an example:
+    <pre class="prettyprint"><code>
+function doubleValues(data) {
+    for var i = 0; i < data.length; i++) {
+        data[i] = data[i] * 2;
+    }
+}
+    </code></pre>
             </p>
             <p>
-                This course will cover the basics of higher-order functions
-                in JavaScript. A higher-order function is a <i>function that
-                accepts another function as an argument, or returns a
-                function as its result.</i> Both of these requirements rely
-                on functions being first-class objects in a language.
+                You an always use a <code>for-loop</code> to get the desired
+                result, but <code>for-loops</code> can quickly become a bit
+                messy and large. Most of the time it can be much easier to
+                use a higher-order function.
             </p>
             <p>
-                This course was created because I am teaching an <b>Advanced
-            JavaScript Course</b> for Women Who Code. Several people asked if
-                they are new to JavaScript programming, would they be able to
-                attend my class. If you can understand the topics in this
-                course then you have enough programming skills to attend my
-                <b>Advanced JavaScript Course</b>.  You can find <a
-                    href="https://www.meetup.com/Women-Who-Code-Atlanta/events/247626913/" target="_blank">more
-                information on my course here.</a>
+                A higher-order function is a better solution to manipulating
+                data than a for-loop. <code>map</code>, <code>filter</code>
+                and <code>reduce</code> / <code>reduceRight</code> are the
+                functions in JavaScript that map to classic higher-order
+                functions.
+            </p>
+            <p>
+                When using higher-order functions, your code stays cleaner
+                and is easier to read.
+            </p>
+            <p>
+                The rule of thumb I use to determine which higher-order
+                function I should use is as follows:
+                <ul>
+                    <li>If I already have an array and I want to do the exact
+                        same operation on each of the elements in the array and
+                        return the same amount of items in the array, use
+                        <code>map</code>.
+                    </li>
+                    <li>If I already have an array but I only want to have items
+                        in the array that match certain criteria, use
+                        <code>filter</code>.
+                    </li>
+                    <li>If I already have an array, but I want to use the
+                        values in that array to create something completely new,
+                        use <code>reduce</code>.
+                    </li>
+                </ul>
             </p>
         </div>
-  </template>
+    </template>
 
     <script>
-        class MyLesson1 extends Polymer.Element {
-            static get is() { return 'my-lesson1'; }
+        class MyLesson2 extends Polymer.Element {
+            static get is() { return 'my-lesson2'; }
+
+            ready() {
+                super.ready();
+
+                var blocks = this.shadowRoot.querySelectorAll('pre > code');
+                blocks.forEach(function(block) {
+                    Polymer.dom(block).innerHTML = prettyPrintOne(
+                        this._encodeHTMLEntities(block.textContent));
+                }.bind(this));
+
+            }
+            _encodeHTMLEntities(htmlStr) {
+                return htmlStr
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
         }
 
-
-    window.customElements.define(MyLesson1.is, MyLesson1);
+        window.customElements.define(MyLesson2.is, MyLesson2);
     </script>
 </dom-module>
